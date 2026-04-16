@@ -405,6 +405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   movePower: 500
+  health: 50
 --- !u!114 &622015662066938851
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,9 +1,11 @@
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
-{
+{    
     public float movePower;
+    public int health;
     Rigidbody myBod;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
