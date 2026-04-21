@@ -6,10 +6,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {    
     public float movePower;
     public int health;
+    public int score;
 
     Rigidbody myBod;
     Transform healthBar;
     Text namePlate;
+    Text scorePlate;
 
     // Is called as soon as gameobject is instantiated before anything else.
     void Awake()
@@ -17,6 +19,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         myBod = GetComponent<Rigidbody>();  
         healthBar = transform.Find("Canvas/GreenHealth");
         namePlate = transform.Find("Canvas/NamePlate").GetComponent<Text>();
+        scorePlate = transform.Find("Canvas/ScorePlate").GetComponent<Text>();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -43,6 +46,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         // all players irrelvant of ownership
+        scorePlate.text = "" + score;
         healthBar.localScale = new Vector3(health/100f, 1, 1);
         if(health <= 0)
         {
@@ -74,6 +78,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         else
         {
             health = (int) stream.ReceiveNext();
+        }
+    }
+
+    [PunRPC] //callable over network
+    public void increaseScore(int i)
+    {
+        this.score += i;
+        if(this.score < 0)
+        {
+            this.score = 0;
         }
     }
 }

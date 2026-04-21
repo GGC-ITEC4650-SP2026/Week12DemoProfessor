@@ -6,6 +6,8 @@ public class NetMan : MonoBehaviourPunCallbacks
 {
     Spinner lavaBlade;
     public GameObject playerPrefab;
+    public GameObject ballPrefab;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,7 +25,19 @@ public class NetMan : MonoBehaviourPunCallbacks
         Vector3 pos = 
             new Vector3(Random.Range(-8, 8), Random.Range(-4, 4), 0);        
         PhotonNetwork.Instantiate(playerPrefab.name, pos, 
-            Quaternion.identity);
-        
+            Quaternion.identity); 
+    }
+
+    //RUNS ON SERVER WHEN PLAYER ENTERS GAME
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        if(PhotonNetwork.IsMasterClient) //RUN ON SERVER ONLY
+        {
+            if(PhotonNetwork.CurrentRoom.PlayerCount == 4)
+            {
+                PhotonNetwork.Instantiate(ballPrefab.name, Vector3.zero, 
+                    Quaternion.identity); 
+            }
+        }
     }
 }
